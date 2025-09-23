@@ -1,0 +1,14 @@
+# Loan Eligibility Program
+
+# Given details
+age = 23
+income = 21000
+
+print("Welcome to the Bank Loan Eligibility Checker")
+print(f"Your Age: {age}")
+print(f"Your Annual Income: Sh{income}")
+
+# Check eligibility
+if age >= 21 and income >= 21000:
+    print("Congratulations! You are eligible for the loan.")
+
