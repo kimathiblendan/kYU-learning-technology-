@@ -1,0 +1,90 @@
+include <stdio.h>
+
+include <stdlib.h>
+
+// Function to write 10 integers to "input.txt"
+void writeInputFile() {
+    FILE *fptr = fopen("input.txt", "w");
+    if (fptr == NULL) {
+        printf("Error opening input.txt for writing.\n");
+        return;
+    }
+
+    int num;
+    printf("Enter 10 integers:\n");
+    for (int i = 0; i < 10; i++) {
+        printf("Integer %d: ", i + 1);
+        scanf("%d", &num);
+        fprintf(fptr, "%d\n", num);
+    }
+
+    fclose(fptr);
+}
+
+// Function to read integers, calculate sum and average, and write to "output.txt"
+void processInputFile() {
+    FILE *fptr = fopen("input.txt", "r");
+    if (fptr == NULL) {
+        printf("Error opening input.txt for reading.\n");
+        return;
+    }
+
+    FILE *outptr = fopen("output.txt", "w");
+    if (outptr == NULL) {
+        printf("Error opening output.txt for writing.\n");
+        fclose(fptr);
+        return;
+    }
+
+    int num, sum = 0, count = 0;
+    while (fscanf(fptr, "%d", &num) == 1) {
+        sum += num;
+        count++;
+    }
+
+    if (count == 0) {
+        fprintf(outptr, "No data to process.\n");
+    } else {
+        float average = (float)sum / count;
+        fprintf(outptr, "Sum: %d\nAverage: %.2f\n", sum, average);
+    }
+
+    fclose(fptr);
+    fclose(outptr);
+}
+
+// Function to display contents of both files
+void displayFiles() {
+    char ch;
+    FILE *fptr = fopen("input.txt", "r");
+    if (fptr == NULL) {
+        printf("Error opening input.txt for display.\n");
+        return;
+    }
+
+    printf("\nContents of input.txt:\n");
+    while ((ch = fgetc(fptr)) != EOF) {
+        putchar(ch);
+    }
+    fclose(fptr);
+
+    FILE *outptr = fopen("output.txt", "r");
+    if (outptr == NULL) {
+        printf("Error opening output.txt for display.\n");
+        return;
+    }
+
+    printf("\nContents of output.txt:\n");
+    while ((ch = fgetc(outptr)) != EOF) {
+        putchar(ch);
+    }
+    fclose(outptr);
+}
+
+// Main function
+int main() {
+    writeInputFile();
+    processInputFile();
+    displayFiles();
+    return 0;
+}
