@@ -1,0 +1,9 @@
+#include <stdio.h>
+
+int main() {
+    // Declare and initialize a 2D array
+    int scores[2][4] = {
+        {65, 92, 35, 70},
+        {84, 72, 59, 67}
+    };
+
