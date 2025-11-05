@@ -1,0 +1,27 @@
+Request user input
+hours_worked = float(input("Enter hours worked in a week: "))
+hourly_wage = float(input("Enter hourly wage: "))
+
+Calculate gross pay
+if hours_worked <= 40:
+    grosspay = hoursworked * hourly_wage
+else:
+    regularpay = 40 * hourlywage
+    overtimehours = hoursworked - 40
+    overtimepay = overtimehours  hourly_wage  1.5
+    grosspay = regularpay + overtime_pay
+
+Calculate taxes
+if gross_pay <= 600:
+    taxes = gross_pay * 0.15
+else:
+    taxes = 600  0.15 + (gross_pay - 600)  0.20
+
+Calculate net pay
+netpay = grosspay - taxes
+
+Display results
+print(f"Gross Pay: ${gross_pay:.2f}")
+print(f"Taxes: ${taxes:.2f}")
+print(f"Net Pay: ${net_pay:.2f}")
+`
