@@ -1,27 +1,36 @@
-Request user input
-hours_worked = float(input("Enter hours worked in a week: "))
-hourly_wage = float(input("Enter hourly wage: "))
+include <stdio.h>
 
-Calculate gross pay
-if hours_worked <= 40:
-    grosspay = hoursworked * hourly_wage
-else:
-    regularpay = 40 * hourlywage
-    overtimehours = hoursworked - 40
-    overtimepay = overtimehours  hourly_wage  1.5
-    grosspay = regularpay + overtime_pay
+int main() {
+    float hours, wage;
+    float grosspay, tax, netpay;
 
-Calculate taxes
-if gross_pay <= 600:
-    taxes = gross_pay * 0.15
-else:
-    taxes = 600  0.15 + (gross_pay - 600)  0.20
+    // Input
+    printf("Enter hours worked in a week: ");
+    scanf("%f", &hours);
+    printf("Enter hourly wage: ");
+    scanf("%f", &wage);
 
-Calculate net pay
-netpay = grosspay - taxes
+    // Calculate gross pay
+    if (hours <= 40) {
+        gross_pay = hours * wage;
+    } else {
+        gross_pay = (40  wage) + ((hours - 40)  wage * 1.5);
+    }
 
-Display results
-print(f"Gross Pay: ${gross_pay:.2f}")
-print(f"Taxes: ${taxes:.2f}")
-print(f"Net Pay: ${net_pay:.2f}")
-`
+    // Calculate tax
+    if (gross_pay <= 600) {
+        tax = gross_pay * 0.15;
+    } else {
+        tax = (600  0.15) + ((gross_pay - 600)  0.20);
+    }
+
+    // Calculate net pay
+    netpay = grosspay - tax;
+
+    // Output
+    printf("\nGross Pay: $%.2f\n", gross_pay);
+    printf("Taxes: $%.2f\n", tax);
+    printf("Net Pay: $%.2f\n", net_pay);
+
+    return 0;
+}
