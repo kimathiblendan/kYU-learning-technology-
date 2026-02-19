@@ -1,0 +1,38 @@
+CREATE DATABASE UPS;
+USE UPS;
+
+ Retail Center table
+CREATE TABLE Retail_Center (
+    UniqueID INT PRIMARY KEY AUTO_INCREMENT,
+    Type VARCHAR(50),
+    Address VARCHAR(255)
+);
+
+Shipped Item table
+CREATE TABLE Shipped_Item (
+    Item_No INT PRIMARY KEY AUTO_INCREMENT,
+    Weight DECIMAL(10, 2),
+    Dimensions VARCHAR(50),
+    Insurance_Amount DECIMAL(10, 2),
+    Destination VARCHAR(255),
+    Final_Delivery_Date DATE,
+    Retail_ID INT,
+    FOREIGN KEY (Retail_ID) REFERENCES Retail_Center(UniqueID)
+);
+
+ Transportation Event table
+CREATE TABLE Transportation_Event (
+    ScheduleNo INT PRIMARY KEY AUTO_INCREMENT,
+    Type VARCHAR(50),
+    DeliveryRoute VARCHAR(255)
+);
+
+Junction table 
+CREATE TABLE Item_Transport (
+    Item_No INT,
+    ScheduleNo INT,
+    Sequence_Order INT,
+    PRIMARY KEY (Item_No, ScheduleNo),
+    FOREIGN KEY (Item_No) REFERENCES Shipped_Item(Item_No),
+    FOREIGN KEY (ScheduleNo) REFERENCES Transportation_Event(ScheduleNo)
+);
