@@ -1,14 +1,14 @@
 DATABASE BANK;
 USE BANK;
 
--- Bank table
+ Bank table
 CREATE TABLE Bank (
     B_name VARCHAR(100) PRIMARY KEY,
     F_name VARCHAR(100),
     Address VARCHAR(255)
 );
 
--- Branch table
+Branch table
 CREATE TABLE Branch (
     Branch_Code INT PRIMARY KEY,
     B_name VARCHAR(100),
@@ -18,7 +18,7 @@ CREATE TABLE Branch (
     FOREIGN KEY (B_name) REFERENCES Bank(B_name)
 );
 
--- Customer table
+Customer table
 CREATE TABLE Customer (
     Mobile_No VARCHAR(15) PRIMARY KEY,
     Name VARCHAR(100),
@@ -29,7 +29,7 @@ CREATE TABLE Customer (
     FOREIGN KEY (Branch_Code) REFERENCES Branch(Branch_Code)
 );
 
--- Employee table
+-Employee table
 CREATE TABLE Employee (
     Emp_ID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(100),
@@ -38,7 +38,7 @@ CREATE TABLE Employee (
     FOREIGN KEY (Branch_Code) REFERENCES Branch(Branch_Code)
 );
 
--- Loan table
+ Loan table
 CREATE TABLE Loan (
     Loan_No INT PRIMARY KEY AUTO_INCREMENT,
     Mobile_No VARCHAR(15),
