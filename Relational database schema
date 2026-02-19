@@ -1,0 +1,158 @@
+Relational Database Schema
+
+1. Customer
+
+CREATE TABLE Customer (
+    CustID INTEGER PRIMARY KEY,
+    CustName VARCHAR(100) NOT NULL,
+    CustAddress VARCHAR(200),
+    CustPhone VARCHAR(20),
+    CustEmail VARCHAR(100),
+    CustCountry VARCHAR(50)
+);
+
+2. ProdUnit (Production Unit)
+
+CREATE TABLE ProdUnit (
+    ProdID INTEGER PRIMARY KEY,
+    ProdName VARCHAR(100) NOT NULL,
+    ProdLocation VARCHAR(200),
+    ProdPhone VARCHAR(20),
+    ProdEmail VARCHAR(100),
+    ProdCountry VARCHAR(50)
+);
+3. Supplier
+
+
+CREATE TABLE Supplier (
+    SupplierID INTEGER PRIMARY KEY,
+    SupplierName VARCHAR(100) NOT NULL,
+    SupplierCountry VARCHAR(50)
+);
+
+4. Warehouse
+
+CREATE TABLE Warehouse (
+    WarehouseID INTEGER PRIMARY KEY,
+    WarehouseName VARCHAR(100) NOT NULL,
+    WarehouseCountry VARCHAR(50)
+);
+
+5. RawMaterials
+
+
+CREATE TABLE RawMaterials (
+    RawID INTEGER PRIMARY KEY,
+    RawName VARCHAR(100) NOT NULL,
+    RawQuantity DECIMAL(10,2),
+    RawPrice DECIMAL(10,2),
+    RawCountry VARCHAR(50)
+);
+
+
+6. Unit (Measurement Unit)
+
+
+CREATE TABLE Unit (
+    UnitID INTEGER PRIMARY KEY,
+    UnitName VARCHAR(50) NOT NULL,
+    UnitType VARCHAR(50),
+    UnitCountry VARCHAR(50)
+);
+
+
+7. Product
+
+
+CREATE TABLE Product (
+    ProductID INTEGER PRIMARY KEY,
+    ProductName VARCHAR(100) NOT NULL,
+    ProductCategoryID INTEGER,
+    ProductUnitID INTEGER NOT NULL,
+    ProductQuantity DECIMAL(10,2),
+    ProductPrice DECIMAL(10,2),
+    ProductCountry VARCHAR(50),
+    FOREIGN KEY (ProductUnitID) REFERENCES Unit(UnitID)
+);
+
+
+8. Lot (Production Batch)
+
+
+CREATE TABLE Lot (
+    LotID INTEGER PRIMARY KEY,
+    LotName VARCHAR(100) NOT NULL,
+    LotStatus VARCHAR(50),
+    -- Additional foreign keys would be added based on relationships
+    -- (relationships not fully shown in diagram)
+);
+
+
+9. Order
+
+CREATE TABLE Order (
+    OrderID INTEGER PRIMARY KEY,
+    OrderDate DATE NOT NULL,
+    OrderStatus VARCHAR(50),
+    OrderCustomerID INTEGER NOT NULL,
+    OrderProductID INTEGER NOT NULL,
+    OrderQuantity DECIMAL(10,2),
+    OrderPrice DECIMAL(10,2),
+    OrderCountry VARCHAR(50),
+    FOREIGN KEY (OrderCustomerID) REFERENCES Customer(CustID),
+    FOREIGN KEY (OrderProductID) REFERENCES Product(ProductID)
+);
+
+10. Lot_RawMaterials (Links lots to raw materials used)
+
+
+CREATE TABLE Lot_RawMaterials (
+    LotID INTEGER,
+    RawID INTEGER,
+    QuantityUsed DECIMAL(10,2),
+    DateUsed DATE,
+    PRIMARY KEY (LotID, RawID),
+    FOREIGN KEY (LotID) REFERENCES Lot(LotID),
+    FOREIGN KEY (RawID) REFERENCES RawMaterials(RawID)
+);
+
+
+11. Product_RawMaterials (Bill of materials)
+
+
+CREATE TABLE Product_RawMaterials (
+    ProductID INTEGER,
+    RawID INTEGER,
+    QuantityRequired DECIMAL(10,2),
+    PRIMARY KEY (ProductID, RawID),
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+    FOREIGN KEY (RawID) REFERENCES RawMaterials(RawID)
+);
+
+
+12. Supplier_RawMaterials
+
+
+CREATE TABLE Supplier_RawMaterials (
+    SupplierID INTEGER,
+    RawID INTEGER,
+    SupplyPrice DECIMAL(10,2),
+    LeadTimeDays INTEGER,
+    PRIMARY KEY (SupplierID, RawID),
+    FOREIGN KEY (SupplierID) REFERENCES Supplier(SupplierID),
+    FOREIGN KEY (RawID) REFERENCES RawMaterials(RawID)
+);
+
+
+13. Warehouse_Inventory
+
+
+CREATE TABLE Warehouse_Inventory (
+    WarehouseID INTEGER,
+    ProductID INTEGER,
+    QuantityOnHand DECIMAL(10,2),
+    LastUpdated TIMESTAMP,
+    PRIMARY KEY (WarehouseID, ProductID),
+    FOREIGN KEY (WarehouseID) REFERENCES Warehouse(WarehouseID),
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID)
+);
